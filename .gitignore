@@ -1,0 +1,17 @@
+# Object files
+*.o
+
+# Executable files
+my_program
+my_program.exe
+*.exe
+
+# vscode
+.vscode
+
+# Build directories
+build/
+bin/
+
+# Dependency files
+*.d
