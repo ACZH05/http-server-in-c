@@ -19,4 +19,4 @@ run:
 	@$(TARGET)
 
 clean:
-	rd /s /q $(BUILD_DIR)
+	rm -rf $(BUILD_DIR)
