@@ -1,6 +1,6 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-const char* get_message();
+void handle_client(int);
 
 #endif
