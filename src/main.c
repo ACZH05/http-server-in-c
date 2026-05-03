@@ -8,6 +8,8 @@
 
 int main() {
 	int tcp_socket = 0;
+	int option_socket = 0;
+	int opt = 1;
 	int bind_socket = 0;
 	int listen_socket = 0;
 	int client_socket = 0;
@@ -25,6 +27,8 @@ int main() {
 	address.sin_family = AF_INET;
 	address.sin_port = htons(PORT);
 	address.sin_addr.s_addr = INADDR_ANY;
+
+	option_socket = setsockopt(tcp_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 
 	bind_socket = bind(tcp_socket, (struct sockaddr *) &address, sizeof(address));
 
