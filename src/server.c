@@ -14,6 +14,9 @@ int parseRequestLine(char *buffer, RequestLine *request_line) {
 		queue[i]->len = 0;
 
 		while (buffer[cursor] != ' ' && buffer[cursor] != '\r') {
+			if (buffer[cursor] == '\0') {
+				return -1;
+			}
 			queue[i]->len += 1;
 			cursor += 1;
 		}
@@ -25,12 +28,13 @@ int parseRequestLine(char *buffer, RequestLine *request_line) {
 void handle_client(int client_socket) {
 	char buffer[BUFFER_SIZE];
 	int read_socket = 0;
+	int request_line_status = 0;
 
 	read_socket = read(client_socket, buffer, BUFFER_SIZE);
-	printf("buffer: \n%s", buffer);
+	printf("buffer: \n%s\n", buffer);
 	
 	RequestLine request_line;
-	parseRequestLine(buffer, &request_line);
+	request_line_status = parseRequestLine(buffer, &request_line);
 	printf("Method: %.*s\n", request_line.method.len, request_line.method.start);
 	printf("Path: %.*s\n", request_line.path.len, request_line.path.start);
 	printf("Version: %.*s\n", request_line.version.len, request_line.version.start);
