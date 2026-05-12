@@ -12,6 +12,7 @@ typedef struct {
 	Slice version;
 } RequestLine;
 
+void send_response(int, char *, char *, char *);
 int parseRequestLine(char *, RequestLine *);
 void handle_client(int);
 

@@ -1,9 +1,23 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 #include "server.h"
 
 #define BUFFER_SIZE 4096
 
+void send_response(int client_socket, char *status, char *content_type, char *body) {
+	char buffer[4096];
+	int length = snprintf(buffer, sizeof(buffer),
+				"HTTP/1.1 %s\r\n"
+				"Content-Type: %s\r\n"
+				"Content-Length: %d\r\n"
+				"Connection: close\r\n"
+				"\r\n"
+				"%s",
+				status, content_type, (int) strlen(body), body);
+
+	write(client_socket, buffer, 4096);
+}
 
 int parseRequestLine(char *buffer, RequestLine *request_line) {
 	Slice *queue[] = {&request_line->method, &request_line->path, &request_line->version};
@@ -38,4 +52,6 @@ void handle_client(int client_socket) {
 	printf("Method: %.*s\n", request_line.method.len, request_line.method.start);
 	printf("Path: %.*s\n", request_line.path.len, request_line.path.start);
 	printf("Version: %.*s\n", request_line.version.len, request_line.version.start);
+
+	send_response(client_socket, "200 OK", "text/html", "<html><body><h1>Hello World</h1></body></html>");
 }
