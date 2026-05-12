@@ -13,7 +13,7 @@ typedef struct {
 } RequestLine;
 
 void send_response(int, char *, char *, char *);
-int parseRequestLine(char *, RequestLine *);
+int parse_fequest_line(char *, RequestLine *);
 void handle_client(int);
 
 #endif
